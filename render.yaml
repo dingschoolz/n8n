@@ -1,15 +1,26 @@
-# Exported from Render on 2025-07-30T15:02:27Z
 services:
-- type: web
-  name: n8n
-  runtime: node
-  repo: https://github.com/dingschoolz/n8n
-  plan: free
-  envVars:
-  - key: NODE_VERSION
-    sync: false
-  region: oregon
-  buildCommand: pnpm install --frozen-lockfile; pnpm run build
-  startCommand: pnpm run start
-  autoDeployTrigger: commit
-version: "1"
+  - type: web
+    name: n8n
+    env: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: 'true'
+      - key: N8N_BASIC_AUTH_USER
+        value: 'admin'
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: 'matkhau123'
+      - key: N8N_HOST
+        value: n8n.onrender.com
+      - key: WEBHOOK_TUNNEL_URL
+        value: https://n8n.onrender.com
+      - key: GENERIC_TIMEZONE
+        value: Asia/Ha_Noi
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=2048
